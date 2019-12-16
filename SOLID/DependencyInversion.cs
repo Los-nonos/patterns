@@ -1,0 +1,128 @@
+class PaymentCommand
+{
+
+}
+
+//contrato
+//common/interfaces
+
+interface PaymentPasarellInterface
+{
+    void Payment(Account account, int amount);
+}
+
+interface AuthorizePaymentInterface
+{
+    void AuthorizePayment(Account account, int amount);
+}
+
+interface PaymentServicesInterface
+{
+    string Payment(Account account, int amount);
+    string AuthorizePayment(Account account, int amount);
+}
+
+//implementacion concreta
+//infraestructure/services
+
+class MercadoPagoPasarell : PaymentPasarellInterface, AuthorizePaymentInterface
+{
+    AuthorizePayment(Account account, int amount)
+    {
+        throw new Error("Method not implemented.");
+    }
+
+    void Payment(Account account, int amount)
+    {
+        //implementation
+    }
+}
+
+class LdcPagoPararell : PaymentPasarellInterface
+{
+
+    void Payment(Account account, int amount)
+    {
+        //implementation
+    }
+
+    void AuthorizePayment(Account account, int amount)
+    {
+        //implementation
+    }
+}
+
+//servicio que el handler utiliza
+
+class PaymentService : PaymentServicesInterface
+{
+
+    private PaymentPasarellInterface passarell;
+    private AuthorizePaymentInterface authorizePasarell;
+
+    public PaymentService(PaymentPasarellInterface passarell, AuthorizePaymentInterface authorizePasarell)
+    {
+        this.passarell = passarell;
+        this.authorizePasarell = authorizePasarell;
+    }
+
+    string Payment(Account account, int amount)
+    {
+        //implementation service 
+        try
+        {
+            this.passarell.Payment(account, amount);
+            return "todo ok";
+        }
+        catch (error)
+        {
+            throw new Error("ocurrio un error en procesar el pago");
+        }
+    }
+
+    string AuthorizePayment(Account account, int amount)
+    {
+        try
+        {
+            this.authorizePasarell.AuthorizePayment(account, amount);
+            return "todo ok";
+        }
+        catch (Exception)
+        {
+            return "ocurrió un error";
+        }
+    }
+}
+
+
+class PaymentHandler
+{
+
+    private PaymentServicesInterface paymentService;
+
+    public PaymentHandler(PaymentServicesInterface paymentService)
+    {
+        this.paymentService = paymentService;
+    }
+
+    public Handle(PaymentCommand paymentCommand)
+    {
+        this.paymentService.Payment(null, null);
+    }
+}
+
+
+class Program
+{
+    var ldcPagoPararell = new LdcPagoPararell();
+
+    //lo que el inyector realiza
+
+    var service = new PaymentService(new MercadoPagoPasarell(), new MercadoPagoPasarell());
+    var service2 = new PaymentService(ldcPagoPararell, new MercadoPagoPasarell());
+}
+
+/*
+este ejemplo es exactamente igual ya que estos principios estan fuertemente ligados entre si, 
+es bastante complejo violar uno sin violar el otro
+*/
