@@ -1,3 +1,4 @@
+<?php
 interface Measurable
 {
     public function getTotalLength();
