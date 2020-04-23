@@ -1,4 +1,4 @@
-## Patterns repository
+# Patterns repository
 
 Existen mayormente ejemplos en java de casi todos los patrones conocidos, si quiere colaborar agregando patrones o correcciones utilizando buenas prácticas hagálo! (lea la parte de colaboración)
 
