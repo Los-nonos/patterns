@@ -14,6 +14,8 @@ significa que nosotros no programamos un archivo con miles de lineas de código,
 
 ## POO consta de varias partes.
 
+https://github.com/Los-nonos/patterns/blob/master/OOP/OOP.png
+
 ### encapsulamiento
 
 En programación orientada a objetos, se denomina encapsulamiento al ocultamiento del estado, es decir, de los datos miembro de un objeto de manera que solo se pueda cambiar mediante las operaciones definidas para ese objeto.
@@ -65,4 +67,4 @@ Hay bastantes maneras en que podemos reducir la cantidad de acoplamiento dentro 
 - usar interfaces, no clases concretas
 - usar adaptadores
 
-(ver ejemplos)
+(ver ejemplos SOLID)
