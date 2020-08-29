@@ -6,7 +6,7 @@ class PaymentCommand
 //contrato
 //common/interfaces
 
-interface PaymentPasarellInterface
+interface PaymentGatewayInterface
 {
     void Payment(Account account, int amount);
 }
@@ -25,7 +25,7 @@ interface PaymentServicesInterface
 //implementacion concreta
 //infraestructure/services
 
-class MercadoPagoPasarell : PaymentPasarellInterface, AuthorizePaymentInterface
+class MercadoPagoGateway : PaymentGatewayInterface, AuthorizePaymentInterface
 {
     AuthorizePayment(Account account, int amount)
     {
@@ -38,7 +38,7 @@ class MercadoPagoPasarell : PaymentPasarellInterface, AuthorizePaymentInterface
     }
 }
 
-class LdcPagoPararell : PaymentPasarellInterface
+class LdcPagoPararell : PaymentGatewayInterface
 {
 
     void Payment(Account account, int amount)
@@ -57,13 +57,13 @@ class LdcPagoPararell : PaymentPasarellInterface
 class PaymentService : PaymentServicesInterface
 {
 
-    private PaymentPasarellInterface passarell;
-    private AuthorizePaymentInterface authorizePasarell;
+    private PaymentGatewayInterface passarell;
+    private AuthorizePaymentInterface authorizeGateway;
 
-    public PaymentService(PaymentPasarellInterface passarell, AuthorizePaymentInterface authorizePasarell)
+    public PaymentService(PaymentGatewayInterface passarell, AuthorizePaymentInterface authorizeGateway)
     {
         this.passarell = passarell;
-        this.authorizePasarell = authorizePasarell;
+        this.authorizeGateway = authorizeGateway;
     }
 
     string Payment(Account account, int amount)
@@ -84,7 +84,7 @@ class PaymentService : PaymentServicesInterface
     {
         try
         {
-            this.authorizePasarell.AuthorizePayment(account, amount);
+            this.authorizeGateway.AuthorizePayment(account, amount);
             return "todo ok";
         }
         catch (Exception)
@@ -118,8 +118,8 @@ class Program
 
     //lo que el inyector realiza
 
-    var service = new PaymentService(new MercadoPagoPasarell(), new MercadoPagoPasarell());
-    var service2 = new PaymentService(ldcPagoPararell, new MercadoPagoPasarell());
+    var service = new PaymentService(new MercadoPagoGateway(), new MercadoPagoGateway());
+    var service2 = new PaymentService(ldcPagoPararell, new MercadoPagoGateway());
 }
 
 /*
